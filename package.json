@@ -11,6 +11,9 @@
   },
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc",
+    "prestart": "npm run build",
     "start": "ts-node .",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
