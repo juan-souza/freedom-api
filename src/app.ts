@@ -1,87 +1,48 @@
 import express from 'express';
+import logger from 'morgan';
 import * as bodyParser from 'body-parser';
-import {Movie} from "./db/models/Movie.model";
-import {connect} from "./db/db";
 
-connect();
+import PersonRouter from './router/personRouter';
+import MovieRouter from './router/movieRouter';
 
-const app = express();
-app.use(bodyParser.json({
-  limit: '50mb',
-  verify(req: any, res, buf, encoding) {
-    req.rawBody = buf;
+
+// Creates and configures an ExpressJS web server.
+class App {
+
+  // ref to Express instance
+  public express: express.Application;
+
+  // Run configuration methods on the Express instance.
+  constructor() {
+    this.express = express();
+    this.middleware();
+    this.routes();
   }
-}));
 
-app.get('/', (req, res) => res.send('Hello World!'));
-
-// CREATE
-app.post('/movies', async (req, res) => {
-  const movie = new Movie();
-  movie.title = req.body.title;
-  movie.plot_summary = req.body.plot_summary;
-  movie.duration = req.body.duration;
-  await movie.save();
-  res.send(movie);
-});
-
-// READ
-app.get('/movies', async (req, res) => {
-  const movies = await Movie.find();
-  res.send(movies);
-});
-
-// READ SINGLE
-app.get('/movies/:id', async (req, res) => {
-  const movie = await Movie.findOne({
-    where: {
-      id: req.params.id
-    }
-  });
-  if (movie) {
-    res.send(movie);
-  } else {
-    res.status(404).send({message: "Movie not found"})
+  // Configure Express middleware.
+  private middleware(): void {
+    this.express.use(logger('dev'));
+    this.express.use(bodyParser.json());
+    this.express.use(bodyParser.urlencoded({extended: false}));
   }
-});
 
-// UPDATE
-app.put('/movies/:id', async (req, res) => {
-  const movie = await Movie.findOne({
-    where: {
-      id: req.params.id
-    }
-  });
-  if (movie) {
-    if (req.body.title) {
-      movie.title = req.body.title;
-    }
-    if (req.body.plot_summary) {
-      movie.plot_summary = req.body.plot_summary;
-    }
-    if (req.body.duration) {
-      movie.duration = req.body.duration;
-    }
-    await movie.save();
-    res.send(movie);
-  } else {
-    res.status(404).send({message: "Movie not found"})
+  // Configure API endpoints.
+  private routes(): void {
+    /* This is just to get up and running, and to make sure what we've got is
+     * working so far. This function will change when we start to add more
+     * API endpoints */
+    const router = express.Router();
+    // placeholder route handler
+    router.get('/', (req, res, next) => {
+      res.json({
+        message: 'Hello World!'
+      });
+    });
+
+    this.express.use('/', router);
+    this.express.use('/api/v1/person', PersonRouter);
+    this.express.use('/api/v1/movie', MovieRouter);
   }
-});
+}
 
-// DELETE
-app.delete('/movies/:id', async (req, res) => {
-  const movie = await Movie.findOne({
-    where: {
-      id: req.params.id
-    }
-  });
-  if (movie) {
-    await movie.remove();
-    res.send({message: 'Movie deleted'});
-  } else {
-    res.status(404).send({message: "Movie not found"})
-  }
-});
-
-export {app};
+export default new App().express;

@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-@Entity('movies')
+@Entity('movie')
 export class Movie extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
