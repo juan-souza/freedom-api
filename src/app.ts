@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 
 import PersonRouter from './router/personRouter';
 import MovieRouter from './router/movieRouter';
-
+import {connect} from "./db/db";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -17,6 +17,7 @@ class App {
     this.express = express();
     this.middleware();
     this.routes();
+    connect().then(r => console.log("connect to db"));
   }
 
   // Configure Express middleware.

@@ -1,6 +1,6 @@
 import {Router, Request, Response, NextFunction} from 'express';
-import {connection} from "../db/db";
 import {Movie} from "../entity/Movie";
+import {checkJwt} from "../middleware/authz.middleware";
 
 export class MovieRouter {
   router: Router
@@ -21,16 +21,9 @@ export class MovieRouter {
   }
 
   // READ
-  public get(req: Request, res: Response, next: NextFunction) {
-    connection
-      .then(async con => {
-        const superHeroes: Movie[] = await con.manager.find(Movie);
-        res.json(superHeroes);
-      })
-      .catch(error => {
-        console.error("Error ", error);
-        res.json(error);
-      });
+  public async get(req: Request, res: Response, next: NextFunction) {
+    const movies = await Movie.find();
+    res.send(movies);
   }
 
   // READ SINGLE
@@ -87,7 +80,8 @@ export class MovieRouter {
   }
 
   init() {
-   // this.router.post('/', this.post);
+    //this.router.use(checkJwt);
+    this.router.post('/', this.post);
     this.router.get('/', this.get);
     this.router.get('/:id', this.getId);
     this.router.put('/:id', this.put);
