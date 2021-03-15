@@ -80,7 +80,7 @@ export class MovieRouter {
   }
 
   init() {
-    //this.router.use(checkJwt);
+    // this.router.use(checkJwt);
     this.router.post('/', this.post);
     this.router.get('/', this.get);
     this.router.get('/:id', this.getId);
