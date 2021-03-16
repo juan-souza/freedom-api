@@ -11,79 +11,82 @@ export class UserRouter {
   }
 
   // CREATE
-  /*  public async post(req: Request, res: Response, next: NextFunction) {
-      const movie = new Movie();
-      movie.title = req.body.title;
-      movie.plot_summary = req.body.plot_summary;
-      movie.duration = req.body.duration;
-      await movie.save();
-      res.send(movie);
-    }*/
+  public async post(req: Request, res: Response, next: NextFunction) {
+    const user = new User();
+    user.name = req.body.name;
+    user.password = req.body.password;
+    user.email = req.body.email;
+    await user.save();
+    res.send(user);
+  }
 
   // READ
   public async get(req: Request, res: Response, next: NextFunction) {
-    const movies = await User.find();
-    res.send(movies);
+    const user = await User.find();
+    res.send(user);
   }
 
   // READ SINGLE
-    public async getId(req: Request, res: Response, next: NextFunction) {
+  public async getId(req: Request, res: Response, next: NextFunction) {
     console.log(req.params)
-      const user = await User.findOne({
-        where: {
-          id: req.params.id
-        }
-      });
-      if (user) {
-        res.send(user);
-      } else {
-        res.status(404).send({message: "User not found"})
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
       }
+    });
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({message: "User not found"})
     }
+  }
 
   // UPDATE
-  /*  public async put(req: Request, res: Response, next: NextFunction) {
-      const movie = await Movie.findOne({
-        where: {
-          id: req.params.id
-        }
-      });
-      if (movie) {
-        if (req.body.title) {
-          movie.title = req.body.title;
-        }
-        if (req.body.plot_summary) {
-          movie.plot_summary = req.body.plot_summary;
-        }
-        if (req.body.duration) {
-          movie.duration = req.body.duration;
-        }
-        await movie.save();
-        res.send(movie);
-      } else {
-        res.status(404).send({message: "Movie not found"})
+  public async put(req: Request, res: Response, next: NextFunction) {
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
       }
-    }*/
+    });
+    if (user) {
+      if (req.body.name) {
+        user.name = req.body.name;
+      }
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      if (req.body.email) {
+        user.email = req.body.email;
+      }
+      await user.save();
+      res.send(user);
+    } else {
+      res.status(404).send({message: "User not found"})
+    }
+  }
 
   // DELETE
-  /*  public async delete(req: Request, res: Response, next: NextFunction) {
-      const movie = await Movie.findOne({
-        where: {
-          id: req.params.id
-        }
-      });
-      if (movie) {
-        await movie.remove();
-        res.send({message: 'Movie deleted'});
-      } else {
-        res.status(404).send({message: "Movie not found"})
+  public async delete(req: Request, res: Response, next: NextFunction) {
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
       }
-    }*/
+    });
+    if (user) {
+      await user.remove();
+      res.send({message: 'User deleted'});
+    } else {
+      res.status(404).send({message: "User not found"})
+    }
+  }
 
   init() {
-    this.router.use(checkJwt);
+    // this.router.use(checkJwt);
+    this.router.post('/', this.post);
     this.router.get('/', this.get);
-    this.router.get('/id/:id', this.getId);
+    this.router.get('/:id', this.getId);
+    this.router.put('/:id', this.put);
+    this.router.delete('/:id', this.delete);
   }
 
 }

@@ -2,8 +2,6 @@ import express from 'express';
 import logger from 'morgan';
 import * as bodyParser from 'body-parser';
 
-import PersonRouter from './router/personRouter';
-import MovieRouter from './router/movieRouter';
 import UserRouter from './router/userRouter';
 import {connect} from "./db/db";
 
@@ -42,8 +40,6 @@ class App {
     });
 
     this.express.use('/', router);
-    this.express.use('/api/v1/person', PersonRouter);
-    this.express.use('/api/v1/movie', MovieRouter);
     this.express.use('/api/v1/user', UserRouter);
   }
 }
