@@ -3,7 +3,7 @@ import logger from 'morgan';
 import * as bodyParser from 'body-parser';
 
 import UserRouter from './router/userRouter';
-import {connect} from "./db/db";
+import {connect} from "./database/connection";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -31,15 +31,6 @@ class App {
     /* This is just to get up and running, and to make sure what we've got is
      * working so far. This function will change when we start to add more
      * API endpoints */
-    const router = express.Router();
-    // placeholder route handler
-    router.get('/', (req, res, next) => {
-      res.json({
-        message: 'Hello World!'
-      });
-    });
-
-    this.express.use('/', router);
     this.express.use('/api/v1/user', UserRouter);
   }
 }

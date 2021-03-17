@@ -12,8 +12,6 @@ export class User extends BaseEntity {
   @Column()
   name: string;
   @Column()
-  fullName: string;
-  @Column()
   password: string;
   @Column()
   email: string;
