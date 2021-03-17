@@ -1,9 +1,10 @@
 import express from 'express';
 import logger from 'morgan';
 import * as bodyParser from 'body-parser';
-
 import UserRouter from './router/userRouter';
-import {connect} from "./db/db";
+import { connect } from "./database/connect";
+import * as dotenv from "dotenv";
+
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -13,6 +14,7 @@ class App {
 
   // Run configuration methods on the Express instance.
   constructor() {
+    dotenv.config();
     this.express = express();
     this.middleware();
     this.routes();
@@ -23,7 +25,7 @@ class App {
   private middleware(): void {
     this.express.use(logger('dev'));
     this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({extended: false}));
+    this.express.use(bodyParser.urlencoded({ extended: false }));
   }
 
   // Configure API endpoints.
@@ -40,7 +42,7 @@ class App {
     });
 
     this.express.use('/', router);
-    this.express.use('/api/v1/user', UserRouter);
+    this.express.use('/api/v1/users', UserRouter);
   }
 }
 
