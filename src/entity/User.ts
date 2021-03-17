@@ -1,5 +1,6 @@
 import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn,} from "typeorm";
 import bcrypt from 'bcryptjs'
+import Roles from "./Roles";
 
 @Entity('User')
 export class User extends BaseEntity {
@@ -16,8 +17,17 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column()
-  role: number;
+/*  @Column({
+    type: "enum",
+    enum: Roles,
+    default: [Roles.NONE]
+  })
+  role: Roles;*/
+
+ /* @Column('int')
+  status: UserStatus;
+
+*/
 
   @BeforeInsert()
   @BeforeUpdate()
