@@ -1,6 +1,7 @@
 import {Router, Request, Response, NextFunction} from 'express';
 import {User} from "../entity/User";
-import {checkJwt} from "../middleware/authz.middleware";
+import {checkJwt} from "../middleware/checkJwt";
+import {checkRole} from "../middleware/checkRole";
 
 export class UserRouter {
   router: Router
@@ -28,7 +29,6 @@ export class UserRouter {
 
   // READ SINGLE
   public async getId(req: Request, res: Response, next: NextFunction) {
-    console.log(req.params)
     const user = await User.findOne({
       where: {
         id: req.params.id
@@ -81,9 +81,8 @@ export class UserRouter {
   }
 
   init() {
-    // this.router.use(checkJwt);
-    this.router.post('/', this.post);
-    this.router.get('/', this.get);
+    //this.router.post('/',[checkJwt], this.post);
+    //this.router.get('/', [checkJwt, checkRole([1])], this.get);
     this.router.get('/:id', this.getId);
     this.router.put('/:id', this.put);
     this.router.delete('/:id', this.delete);
