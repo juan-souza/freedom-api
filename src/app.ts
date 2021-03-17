@@ -3,6 +3,7 @@ import logger from 'morgan';
 import * as bodyParser from 'body-parser';
 
 import UserRouter from './router/userRouter';
+import AuthRouter from "./router/authRouter";
 import {connect} from "./database/connection";
 
 // Creates and configures an ExpressJS web server.
@@ -32,6 +33,7 @@ class App {
      * working so far. This function will change when we start to add more
      * API endpoints */
     this.express.use('/api/v1/user', UserRouter);
+    this.express.use('/auth', AuthRouter);
   }
 }
 
