@@ -3,7 +3,7 @@ import {User} from "../entity/User";
 import jwt from 'jsonwebtoken'
 import Roles from "../entity/Roles";
 
-
+//FIXME: refatorar(finalizar primeiro)
 class AuthController {
 
   async authentication(req: Request, res: Response) {
@@ -43,33 +43,38 @@ class AuthController {
 
   // logout
   async register(req: Request, res: Response) {
-    const {name,email, password, code} = req.body;
-    const verifyRegisterCode = code === 'novouser2021'
+    const {name, email, password, code} = req.body;
+    const verifyRegisterCode = code === process.env.USER_REGISTER_CODEç
 
     if (!(name || email || password || verifyRegisterCode)) {
-      console.log('error')
       res.status(400).send();
     }
 
-    /*
-     validar se email ja existe ou setar email como unique.
-    */
-
-    const user = new User();
-    user.name = name;
-    user.password = password;
-    user.email = email;
-    // user.createDate = Date.now();
-    user.role = Roles.GUEST;
-
+    let user;
     try {
-      await user.save();
+      user = await User.findOne({where: {email}})
     } catch (error) {
-      console.log(error)
       res.status(401).send();
     }
 
-    res.json({success: true, username: name});
+    if (user) {
+      res.status(400).send();
+    } else {
+      const userNew = new User();
+      userNew.name = name;
+      userNew.password = password;
+      userNew.email = email;
+      userNew.createDate = Date.now();
+      userNew.role = Roles.GUEST;
+
+      try {
+        await userNew.save();
+      } catch (error) {
+        res.status(401).send();
+      }
+
+      res.json({success: true, email});
+    }
   }
 
 }
