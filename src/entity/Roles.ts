@@ -1,6 +1,7 @@
 enum Roles {
   NONE,
-  USER ,
-  ADMIN ,
+  USER,
+  ADMIN,
 }
+
 export default Roles;

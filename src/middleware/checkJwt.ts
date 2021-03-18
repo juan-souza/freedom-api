@@ -2,8 +2,6 @@ import {Request, Response, NextFunction} from "express";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 
-dotenv.config();
-
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   /*  const token = req.headers['x-access-token'];
     if (!token) return res.status(401).json({ auth: false, message: 'No token provided.' });

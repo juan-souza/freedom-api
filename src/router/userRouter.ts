@@ -13,8 +13,8 @@ class UserRouter {
   }
 
   init() {
-    // this.router.post('/',[checkJwt], UserController.insert);
-    // this.router.get('/', [checkJwt, checkRole([1])], UserController.findAll);
+    this.router.post('/', UserController.insert);
+    this.router.get('/', UserController.findAll);
     this.router.get('/:id', UserController.findById);
     this.router.put('/:id', UserController.update);
     this.router.delete('/:id', UserController.delete);

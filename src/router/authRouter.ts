@@ -12,9 +12,9 @@ class UserRouter {
   }
 
   init() {
-    this.router.post('/', AuthController.authentication);
-    // this.router.post("/login", AuthController.authentication);
-    // this.router.post("/logout", AuthController.logout);
+    this.router.post('/login', AuthController.authentication);
+    this.router.post("/logout", AuthController.logout);
+    this.router.post("/register", AuthController.register);
   }
 
 }

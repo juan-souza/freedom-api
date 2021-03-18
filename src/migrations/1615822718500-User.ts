@@ -1,4 +1,6 @@
 import {Column, MigrationInterface, QueryRunner, Table} from "typeorm";
+import Roles from "../entity/Roles";
+import UserStatusInfo from "../entity/UserStatusInfo";
 
 export class User1615822718500 implements MigrationInterface {
 
@@ -27,20 +29,19 @@ export class User1615822718500 implements MigrationInterface {
           name: "email",
           type: "varchar",
           isNullable: false,
-        }/*,
+        },
         {
-          name: 'role',
-          type: 'enum',
-          enum: ['0','1','2'],
-          enumName: 'Roles',
-          default: '0'
-        }*/
-
-    /*    {
-          name: "status",
-          type: "integer",
+          name: "role",
+          type: "int",
           isNullable: false,
-        }*/
+          default: Roles.NONE
+        },
+        {
+          name: "statusInfo",
+          type: "int",
+          isNullable: false,
+          default: UserStatusInfo.PENDING
+        }
       ]
     }), true);
   }

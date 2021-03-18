@@ -1,6 +1,7 @@
 import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn,} from "typeorm";
 import bcrypt from 'bcryptjs'
 import Roles from "./Roles";
+import UserStatusInfo from "./UserStatusInfo";
 
 @Entity('User')
 export class User extends BaseEntity {
@@ -17,17 +18,11 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-/*  @Column({
-    type: "enum",
-    enum: Roles,
-    default: [Roles.NONE]
-  })
-  role: Roles;*/
+  @Column('int')
+  role: Roles;
 
- /* @Column('int')
-  status: UserStatus;
-
-*/
+  @Column('int')
+  statusInfo: UserStatusInfo;
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -35,7 +30,7 @@ export class User extends BaseEntity {
     this.password = bcrypt.hashSync(this.password, 8);
   }
 
-  checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+  isValidPassword(unencryptedPassword: string) {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 }

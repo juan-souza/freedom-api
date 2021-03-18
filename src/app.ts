@@ -5,6 +5,9 @@ import AuthRouter from "./router/authRouter";
 import UserRouter from './router/userRouter';
 import {connect} from "./database/connection";
 import * as dotenv from "dotenv";
+import {checkJwt} from "./middleware/checkJwt";
+import {checkRole} from "./middleware/checkRole";
+import Roles from "./entity/Roles";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -33,7 +36,8 @@ class App {
     /* This is just to get up and running, and to make sure what we've got is
      * working so far. This function will change when we start to add more
      * API endpoints */
-    this.express.use('/api/v1/users', UserRouter);
+    //this.express.use('/api/v1/users', [checkJwt, checkRole([Roles.USER, Roles.ADMIN])], UserRouter);
+    this.express.use('/api/v1/users', [checkJwt], UserRouter);
     this.express.use('/api/v1/auth', AuthRouter);
   }
 }
