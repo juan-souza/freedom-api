@@ -34,13 +34,29 @@ export class User1615822718500 implements MigrationInterface {
           name: "role",
           type: "int",
           isNullable: false,
-          default: Roles.NONE
+          default: Roles.GUEST
         },
         {
           name: "statusInfo",
           type: "int",
           isNullable: false,
-          default: UserStatusInfo.PENDING
+          default: UserStatusInfo.PENDING_CONFIRM_EMAIL
+        },
+        {
+          name: "active",
+          type: "tinyint(1)",
+          isNullable: false,
+          default: true
+        },
+        {
+          name: "createDate",
+          type: "datetime",
+          isNullable: true
+        },
+        {
+          name: "updateDate",
+          type: "datetime",
+          isNullable: true
         }
       ]
     }), true);

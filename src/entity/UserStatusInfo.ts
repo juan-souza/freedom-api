@@ -1,7 +1,9 @@
 enum UserStatusInfo {
-  PENDING,
-  INACTIVE,
-  ACTIVE,
+  PENDING_CONFIRM_EMAIL,
+  PENDING_PAYMENT,
+  TIME_TRIAL,
+  PAYMENT_CONFIRMED,
+  LATE_PAYMENT
 }
 
 export default UserStatusInfo;

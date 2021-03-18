@@ -1,5 +1,5 @@
 enum Roles {
-  NONE,
+  GUEST,
   USER,
   ADMIN,
 }

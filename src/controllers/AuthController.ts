@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import {User} from "../entity/User";
 import jwt from 'jsonwebtoken'
+import Roles from "../entity/Roles";
 
 
 class AuthController {
@@ -31,7 +32,7 @@ class AuthController {
       username: user.name,
       email: user.email,
       role: user.role,
-      token: token
+      token
     })
   }
 
@@ -45,19 +46,26 @@ class AuthController {
     const {name,email, password, code} = req.body;
     const verifyRegisterCode = code === 'novouser2021'
 
-    if (!(name && email && password && verifyRegisterCode)) {
+    if (!(name || email || password || verifyRegisterCode)) {
+      console.log('error')
       res.status(400).send();
     }
+
+    /*
+     validar se email ja existe ou setar email como unique.
+    */
 
     const user = new User();
     user.name = name;
     user.password = password;
     user.email = email;
-    user.role = 0;
+    // user.createDate = Date.now();
+    user.role = Roles.GUEST;
 
     try {
       await user.save();
     } catch (error) {
+      console.log(error)
       res.status(401).send();
     }
 
