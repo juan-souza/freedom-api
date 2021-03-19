@@ -25,7 +25,11 @@ class AuthController {
       return res.sendStatus(401);
     }
 
-    const token = jwt.sign({id: user.id, email: user.email}, process.env.ACCESS_TOKEN, {expiresIn: '1h'})
+    const token = jwt.sign({
+      id: user.id,
+      email: user.email,
+      role: user.role
+    }, process.env.ACCESS_TOKEN, {expiresIn: '1h'})
 
     return res.json({
       auth: true,
@@ -44,7 +48,7 @@ class AuthController {
   // logout
   async register(req: Request, res: Response) {
     const {name, email, password, code} = req.body;
-    const verifyRegisterCode = code === process.env.USER_REGISTER_CODEç
+    const verifyRegisterCode = code === process.env.USER_REGISTER_CODE;
 
     if (!(name || email || password || verifyRegisterCode)) {
       res.status(400).send();

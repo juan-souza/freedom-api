@@ -1,10 +1,10 @@
 import express from 'express';
 import logger from 'morgan';
-import * as bodyParser from 'body-parser';
+import bodyParser from 'body-parser';
 import AuthRouter from "./router/authRouter";
 import UserRouter from './router/userRouter';
+import dotenv from "dotenv";
 import {connect} from "./database/connection";
-import * as dotenv from "dotenv";
 import {checkJwt} from "./middleware/checkJwt";
 import {checkRole} from "./middleware/checkRole";
 import Roles from "./entity/Roles";
@@ -28,7 +28,7 @@ class App {
   private middleware(): void {
     this.express.use(logger('dev'));
     this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.use(bodyParser.urlencoded({extended: false}));
   }
 
   // Configure API endpoints.
@@ -36,9 +36,9 @@ class App {
     /* This is just to get up and running, and to make sure what we've got is
      * working so far. This function will change when we start to add more
      * API endpoints */
-    // this.express.use('/api/v1/users', [checkJwt, checkRole([Roles.USER, Roles.ADMIN])], UserRouter);
-    this.express.use('/api/v1/users', [checkJwt], UserRouter);
     this.express.use('/api/v1/auth', AuthRouter);
+    this.express.use('/api/v1/users', [checkJwt], UserRouter);
+    this.express.use('/api/v1/users2', [checkJwt, checkRole([Roles.GUEST])], UserRouter);
   }
 }
 

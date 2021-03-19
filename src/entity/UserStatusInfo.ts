@@ -1,3 +1,4 @@
+//FIXME: Rever nomes
 enum UserStatusInfo {
   PENDING_CONFIRM_EMAIL,
   PENDING_PAYMENT,

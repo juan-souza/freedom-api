@@ -1,24 +1,29 @@
-import { Request, Response, NextFunction } from "express";
-import { getRepository } from "typeorm";
-
-import { User } from "../entity/User";
+import {Request, Response, NextFunction} from "express";
 
 export const checkRole = (roles: number[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    // Get the user ID from previous midleware
-    const id = res.locals.jwtPayload.userId;
 
+    if (!res.locals.jwtPayload) return res.status(401).json({auth: false, message: 'Unauthorized.'});
+
+    // Get the user ID from previous midleware
+    let role = res.locals.jwtPayload.role;
+
+    //FIXME: avaliar necessidade.
     // Get user role from the database
-    const userRepository = getRepository(User);
-    let user: User;
-    try {
-      user = await userRepository.findOneOrFail(id);
-    } catch (id) {
-      res.status(401).send();
-    }
+    /*  let user: User;
+      try {
+        user = await User.findOne({
+          where: {
+            id: res.locals.jwtPayload.id
+          }
+        });
+
+      } catch (error) {
+        res.status(401).send();
+      }*/
 
     // Check if array of authorized roles includes the user's role
-    if (roles.indexOf((user.role)) > -1) next();
-    else res.status(401).send();
+    if (roles.indexOf((role)) > -1) next();
+    else res.status(401).json({auth: false, message: 'Unauthorized.'});
   };
 };

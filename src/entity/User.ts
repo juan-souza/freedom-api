@@ -42,7 +42,7 @@ export class User extends BaseEntity {
   @Column('datetime')
   updateDate: Date;
 
- /*  AUDITORIA DE LOGIN / DATA USER IP TYPE */
+  /* FIXME: AUDITORIA DE LOGIN / DATA USER IP TYPE */
 
   @BeforeInsert()
   @BeforeUpdate()

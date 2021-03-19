@@ -1,4 +1,4 @@
-import {Column, MigrationInterface, QueryRunner, Table} from "typeorm";
+import {MigrationInterface, QueryRunner, Table} from "typeorm";
 import Roles from "../entity/Roles";
 import UserStatusInfo from "../entity/UserStatusInfo";
 
