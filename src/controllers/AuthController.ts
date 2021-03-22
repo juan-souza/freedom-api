@@ -3,7 +3,7 @@ import {User} from "../entity/User";
 import jwt from 'jsonwebtoken'
 import Roles from "../entity/Roles";
 
-//FIXME: refatorar(finalizar primeiro)
+// FIXME: refatorar(finalizar primeiro)
 class AuthController {
 
   async authentication(req: Request, res: Response) {

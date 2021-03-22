@@ -6,9 +6,9 @@ export const checkRole = (roles: number[]) => {
     if (!res.locals.jwtPayload) return res.status(401).json({auth: false, message: 'Unauthorized.'});
 
     // Get the user ID from previous midleware
-    let role = res.locals.jwtPayload.role;
+    const role = res.locals.jwtPayload.role;
 
-    //FIXME: avaliar necessidade.
+    // FIXME: avaliar necessidade.
     // Get user role from the database
     /*  let user: User;
       try {

@@ -47,7 +47,7 @@ export class User extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
+    this.password = bcrypt.hashSync(this.password,  bcrypt.genSaltSync(10));
   }
 
   isValidPassword(unencryptedPassword: string) {

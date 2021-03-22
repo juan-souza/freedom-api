@@ -1,5 +1,6 @@
 import express from 'express';
 import logger from 'morgan';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import AuthRouter from "./router/authRouter";
 import UserRouter from './router/userRouter';
@@ -26,6 +27,7 @@ class App {
 
   // Configure Express middleware.
   private middleware(): void {
+    this.express.use(cors())
     this.express.use(logger('dev'));
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({extended: false}));
