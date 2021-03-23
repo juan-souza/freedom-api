@@ -1,9 +1,8 @@
 import {Router} from 'express';
-import AuthController from '../controllers/AuthController'
+import AuthController from '../controllers/AuthController';
 
 class UserRouter {
-
-  router: Router
+  router: Router;
 
   constructor() {
     this.router = Router();
@@ -12,13 +11,10 @@ class UserRouter {
 
   init() {
     this.router.post('/login', AuthController.authentication);
-    this.router.post("/logout", AuthController.logout);
-    this.router.post("/register", AuthController.register);
+    this.router.post('/logout', AuthController.logout);
+    this.router.post('/register', AuthController.register);
   }
-
 }
 
 const userRouter = new UserRouter();
 export default userRouter.router;
-
-

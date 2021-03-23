@@ -1,9 +1,8 @@
 import {Router} from 'express';
-import UserController from '../controllers/UserController'
+import UserController from '../controllers/UserController';
 
 class UserRouter {
-
-  router: Router
+  router: Router;
 
   constructor() {
     this.router = Router();
@@ -17,10 +16,7 @@ class UserRouter {
     this.router.put('/:id', UserController.update);
     this.router.delete('/:id', UserController.delete);
   }
-
 }
 
 const userRouter = new UserRouter();
 export default userRouter.router;
-
-

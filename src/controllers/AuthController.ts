@@ -1,48 +1,57 @@
 import {Request, Response} from 'express';
-import {User} from "../entity/User";
-import jwt from 'jsonwebtoken'
-import Roles from "../entity/Roles";
+import {User} from '../entity/User';
+import jwt from 'jsonwebtoken';
+import Roles from '../entity/Roles';
+import {StatusCodes} from 'http-status-codes';
 
-// FIXME: refatorar(finalizar primeiro)
 class AuthController {
-
   async authentication(req: Request, res: Response) {
     const {email, password} = req.body;
 
     if (!(email && password)) {
-      res.status(400).send();
+      res
+        .status(StatusCodes.BAD_REQUEST).send({message: 'Email ou Senha Inválido!'});
     }
 
     let user;
 
     try {
-      user = await User.findOne({where: {email}})
+      user = await User.findOne({where: {email}});
     } catch (error) {
-      res.status(401).send();
+      res
+        .status(StatusCodes.UNAUTHORIZED).send({message: 'Email ou Senha Inválido!'});
     }
 
     if (!user.isValidPassword(password)) {
-      return res.sendStatus(401);
+      return res
+        .status(StatusCodes.UNAUTHORIZED).send({message: 'A senha está incorreta!'});
     }
 
-    const token = jwt.sign({
-      id: user.id,
-      email: user.email,
-      role: user.role
-    }, process.env.ACCESS_TOKEN, {expiresIn: '1h'})
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      process.env.ACCESS_TOKEN,
+      {expiresIn: '1h'}
+    );
 
-    return res.json({
+    return res.status(StatusCodes.OK).send({
       auth: true,
+      message: 'OK',
       username: user.name,
       email: user.email,
       role: user.role,
-      token
-    })
+      token,
+    });
   }
 
   // logout
   async logout(req: Request, res: Response) {
-    res.json({auth: false, token: null});
+    res
+      .status(StatusCodes.OK)
+      .send({auth: false, message: 'OK', token: null});
   }
 
   // logout
@@ -51,18 +60,18 @@ class AuthController {
     const verifyRegisterCode = code === process.env.USER_REGISTER_CODE;
 
     if (!(name || email || password || verifyRegisterCode)) {
-      res.status(400).send();
+      res.status(StatusCodes.BAD_REQUEST).send({message: 'BAD_REQUEST'});
     }
 
     let user;
     try {
-      user = await User.findOne({where: {email}})
+      user = await User.findOne({where: {email}});
     } catch (error) {
-      res.status(401).send();
+      res.status(StatusCodes.UNAUTHORIZED).send({message: 'UNAUTHORIZED'});
     }
 
     if (user) {
-      res.status(400).send();
+      res.status(StatusCodes.BAD_REQUEST).send({message: 'BAD_REQUEST'});
     } else {
       const userNew = new User();
       userNew.name = name;
@@ -74,13 +83,12 @@ class AuthController {
       try {
         await userNew.save();
       } catch (error) {
-        res.status(401).send();
+        res.status(StatusCodes.UNAUTHORIZED).send({message: 'UNAUTHORIZED'});
       }
 
-      res.json({success: true, email});
+      res.status(StatusCodes.OK).send({message: 'OK', email: email});
     }
   }
-
 }
 
 export default new AuthController();

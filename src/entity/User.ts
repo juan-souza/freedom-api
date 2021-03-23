@@ -6,15 +6,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Unique,
-} from "typeorm";
-import bcrypt from 'bcryptjs'
-import Roles from "./Roles";
-import UserStatusInfo from "./UserStatusInfo";
+} from 'typeorm';
+import bcrypt from 'bcryptjs';
+import Roles from './Roles';
+import UserStatusInfo from './UserStatusInfo';
 
 @Entity('User')
 @Unique(['email'])
 export class User extends BaseEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -47,7 +46,7 @@ export class User extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    this.password = bcrypt.hashSync(this.password,  bcrypt.genSaltSync(10));
+    this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
   }
 
   isValidPassword(unencryptedPassword: string) {

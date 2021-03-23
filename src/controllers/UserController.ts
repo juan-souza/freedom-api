@@ -1,8 +1,8 @@
 import {Request, Response} from 'express';
-import {User} from "../entity/User";
+import {User} from '../entity/User';
+import {StatusCodes} from "http-status-codes";
 
 class UserController {
-
   async insert(req: Request, res: Response) {
     const user = new User();
     user.name = req.body.name;
@@ -20,21 +20,21 @@ class UserController {
   async findById(req: Request, res: Response) {
     const user = await User.findOne({
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     });
     if (user) {
       res.send(user);
     } else {
-      res.status(404).send({message: "User not found"})
+      res.status(StatusCodes.NOT_FOUND).send({message: ''});
     }
   }
 
   async update(req: Request, res: Response) {
     const user = await User.findOne({
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     });
     if (user) {
       if (req.body.name) {
@@ -49,27 +49,23 @@ class UserController {
       await user.save();
       res.send(user);
     } else {
-      res.status(404).send({message: "User not found"})
+      res.status(StatusCodes.NOT_FOUND).send({message: ''});
     }
   }
 
   async delete(req: Request, res: Response) {
     const user = await User.findOne({
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     });
     if (user) {
       await user.remove();
       res.send({message: 'User deleted'});
     } else {
-      res.status(404).send({message: "User not found"})
+      res.status(StatusCodes.NOT_FOUND).send({message: ''});
     }
   }
-
 }
 
 export default new UserController();
-
-
-

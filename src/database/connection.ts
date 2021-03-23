@@ -1,6 +1,6 @@
-import {getConnectionOptions, createConnection} from "typeorm";
+import {getConnectionOptions, createConnection} from 'typeorm';
 
-export let connect = async () => {
+export const connect = async () => {
   // read connection options from ormconfig file (or ENV variables)
   const connectionOptions = await getConnectionOptions();
 

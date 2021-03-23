@@ -4,7 +4,7 @@ enum UserStatusInfo {
   PENDING_PAYMENT,
   TIME_TRIAL,
   PAYMENT_CONFIRMED,
-  LATE_PAYMENT
+  LATE_PAYMENT,
 }
 
 export default UserStatusInfo;
