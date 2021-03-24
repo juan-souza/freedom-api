@@ -23,15 +23,15 @@ class AuthController {
       return res.status(401).json({message: 'Email or password is incorrect'})
     }
 
-    const token = jwt.sign({
+    const access_token = jwt.sign({
       id: user.id,
       email: user.email,
       role: user.role
     }, `${process.env.ACCESS_TOKEN}`, {expiresIn: '1h'})
 
     return res.json({
-      username: user.name,
-      token
+      name: user.name,
+      access_token
     })
   }
 
