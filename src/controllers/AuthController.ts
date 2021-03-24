@@ -9,40 +9,33 @@ class AuthController {
     const {email, password} = req.body;
 
     if (!(email && password)) {
-      res
-        .status(StatusCodes.BAD_REQUEST).send({message: 'Email ou Senha Inválido!'});
+      return res.status(StatusCodes.BAD_REQUEST).send({message: 'Email or password is incorrect'});
     }
 
-    let user;
+    const user = await User.findOne({where: {email}})
 
-    try {
-      user = await User.findOne({where: {email}});
-    } catch (error) {
-      res
-        .status(StatusCodes.UNAUTHORIZED).send({message: 'Email ou Senha Inválido!'});
+    if (!user) {
+      return res.status(StatusCodes.UNAUTHORIZED).send({message: 'Email or password is incorrect'});
     }
 
     if (!user.isValidPassword(password)) {
       return res
-        .status(StatusCodes.UNAUTHORIZED).send({message: 'A senha está incorreta!'});
+        .status(StatusCodes.UNAUTHORIZED).send({message: 'Email or password is incorrect'});
     }
 
     const token = jwt.sign(
       {
         id: user.id,
         email: user.email,
-        role: user.role,
+        role: user.role
       },
-      process.env.ACCESS_TOKEN,
+      `${process.env.ACCESS_TOKEN}`,
       {expiresIn: '1h'}
     );
 
     return res.status(StatusCodes.OK).send({
-      auth: true,
       message: 'OK',
-      username: user.name,
-      email: user.email,
-      role: user.role,
+      name: user.name,
       token,
     });
   }
@@ -51,7 +44,7 @@ class AuthController {
   async logout(req: Request, res: Response) {
     res
       .status(StatusCodes.OK)
-      .send({auth: false, message: 'OK', token: null});
+      .send({message: 'OK', token: null});
   }
 
   // logout
@@ -60,18 +53,13 @@ class AuthController {
     const verifyRegisterCode = code === process.env.USER_REGISTER_CODE;
 
     if (!(name || email || password || verifyRegisterCode)) {
-      res.status(StatusCodes.BAD_REQUEST).send({message: 'BAD_REQUEST'});
+      return res.status(StatusCodes.BAD_REQUEST).send({message: 'BAD_REQUEST'});
     }
 
-    let user;
-    try {
-      user = await User.findOne({where: {email}});
-    } catch (error) {
-      res.status(StatusCodes.UNAUTHORIZED).send({message: 'UNAUTHORIZED'});
-    }
+    const user = await User.findOne({where: {email}});
 
     if (user) {
-      res.status(StatusCodes.BAD_REQUEST).send({message: 'BAD_REQUEST'});
+      return res.status(StatusCodes.BAD_REQUEST).send({message: 'Email address is registered!'});
     } else {
       const userNew = new User();
       userNew.name = name;
@@ -83,10 +71,10 @@ class AuthController {
       try {
         await userNew.save();
       } catch (error) {
-        res.status(StatusCodes.UNAUTHORIZED).send({message: 'UNAUTHORIZED'});
+        return res.status(StatusCodes.UNAUTHORIZED).send({message: 'Error, Is not possible to save the user, try again!'});
       }
 
-      res.status(StatusCodes.OK).send({message: 'OK', email: email});
+      return res.status(StatusCodes.OK).send({message: 'OK', email: email});
     }
   }
 }

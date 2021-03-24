@@ -49,7 +49,7 @@ export class User extends BaseEntity {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
   }
 
-  isValidPassword(unencryptedPassword: string) {
+  isValidPassword(unencryptedPassword: string):boolean {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 }
