@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import {connect} from './database/connection';
 import {checkJwt} from './middleware/checkJwt';
 import {checkRole} from './middleware/checkRole';
-import Roles from './entity/Roles';
+import Roles from './entity/enum/Roles';
 
 // Creates and configures an ExpressJS web server.
 class App {

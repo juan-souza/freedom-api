@@ -8,8 +8,8 @@ import {
   Unique,
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
-import Roles from './Roles';
-import UserStatusInfo from './UserStatusInfo';
+import Roles from './enum/Roles';
+import UserStatusInfo from './enum/UserStatusInfo';
 
 @Entity('User')
 @Unique(['email'])
@@ -40,8 +40,6 @@ export class User extends BaseEntity {
 
   @Column('datetime')
   updateDate: Date;
-
-  /* FIXME: AUDITORIA DE LOGIN / DATA USER IP TYPE */
 
   @BeforeInsert()
   @BeforeUpdate()

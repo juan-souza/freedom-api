@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {User} from '../entity/User';
 import jwt from 'jsonwebtoken';
-import Roles from '../entity/Roles';
+import Roles from '../entity/enum/Roles';
 import {StatusCodes} from 'http-status-codes';
 
 class AuthController {

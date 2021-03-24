@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import Roles from '../entity/Roles';
-import UserStatusInfo from '../entity/UserStatusInfo';
+import Roles from '../entity/enum/Roles';
+import UserStatusInfo from '../entity/enum/UserStatusInfo';
 
 export class User1615822718500 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
