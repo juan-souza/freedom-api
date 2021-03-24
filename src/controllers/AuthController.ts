@@ -23,7 +23,7 @@ class AuthController {
         .status(StatusCodes.UNAUTHORIZED).send({message: 'Email or password is incorrect'});
     }
 
-    const token = jwt.sign(
+    const access_token = jwt.sign(
       {
         id: user.id,
         email: user.email,
@@ -36,7 +36,7 @@ class AuthController {
     return res.status(StatusCodes.OK).send({
       message: 'OK',
       name: user.name,
-      token,
+      access_token,
     });
   }
 
