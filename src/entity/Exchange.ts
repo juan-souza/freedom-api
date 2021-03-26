@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 import ExchangesType from "./enum/ExchangesType";
 
-//@Entity('Exchange')
+// @Entity('Exchange')
 export class Exchange extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

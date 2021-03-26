@@ -74,7 +74,7 @@ class AuthController {
         return res.status(StatusCodes.UNAUTHORIZED).send({message: 'Error, Is not possible to save the user, try again!'});
       }
 
-      return res.status(StatusCodes.OK).send({message: 'OK', email: email});
+      return res.status(StatusCodes.OK).send({message: 'OK', email});
     }
   }
 }

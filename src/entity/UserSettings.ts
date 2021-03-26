@@ -1,8 +1,8 @@
-//list Exchanges
+// list Exchanges
 
 
-//--notificacao
-//enable telegram
-//enable gmail
-//telegram api
-//telegram key
+// --notificacao
+// enable telegram
+// enable gmail
+// telegram api
+// telegram key
