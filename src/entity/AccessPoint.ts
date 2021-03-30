@@ -18,8 +18,8 @@ export class AccessPoint extends BaseEntity {
   @Column('int')
   type: AccessPointType;
 
-  @Column('datetime')
-  createDate: Date;
+  @Column()
+  createDate: number;
 
   @Column()
   apiKey: string;

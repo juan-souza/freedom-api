@@ -36,11 +36,11 @@ export class User extends BaseEntity {
   @Column()
   active: boolean;
 
-  @Column('datetime')
-  createDate: Date;
+  @Column()
+  createDate: number;
 
-  @Column('datetime')
-  updateDate: Date;
+  @Column()
+  updateDate: number;
 
   @OneToOne(() => UserSettings)
   @JoinColumn()

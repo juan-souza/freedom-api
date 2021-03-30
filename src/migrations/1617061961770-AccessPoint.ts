@@ -29,7 +29,7 @@ export class AccessPoint1617061961770 implements MigrationInterface {
             },
             {
               name: 'createDate',
-              type: 'datetime',
+              type: 'integer',
               isNullable: true,
             },
             {

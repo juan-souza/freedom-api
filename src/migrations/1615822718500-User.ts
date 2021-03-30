@@ -50,12 +50,12 @@ export class User1615822718500 implements MigrationInterface {
           },
           {
             name: 'createDate',
-            type: 'datetime',
+            type: 'integer',
             isNullable: true,
           },
           {
             name: 'updateDate',
-            type: 'datetime',
+            type: 'integer',
             isNullable: true,
           },
         ],
