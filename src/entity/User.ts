@@ -3,13 +3,14 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
-  Entity,
+  Entity, JoinColumn, JoinTable, OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import Roles from './enum/Roles';
 import UserStatusInfo from './enum/UserStatusInfo';
+import {UserSettings} from "./UserSettings";
 
 @Entity('User')
 @Unique(['email'])
@@ -36,10 +37,14 @@ export class User extends BaseEntity {
   active: boolean;
 
   @Column('datetime')
-  createDate: number;
+  createDate: Date;
 
   @Column('datetime')
   updateDate: Date;
+
+  @OneToOne(() => UserSettings)
+  @JoinColumn()
+  settings: UserSettings;
 
   @BeforeInsert()
   @BeforeUpdate()

@@ -18,6 +18,7 @@
     "prestart": "npm run build",
     "start": "ts-node .",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert"
   },
   "keywords": [
