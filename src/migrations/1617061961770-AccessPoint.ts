@@ -1,7 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 import Roles from "../entity/enum/Roles";
 import UserStatusInfo from "../entity/enum/UserStatusInfo";
-import AccessPointType from "../entity/enum/AccessPointType";
 
 export class AccessPoint1617061961770 implements MigrationInterface {
 
@@ -22,11 +21,11 @@ export class AccessPoint1617061961770 implements MigrationInterface {
               type: 'varchar',
               isNullable: false,
             },
-            {
+   /*         {
               name: 'type',
               type: 'int',
               isNullable: false,
-            },
+            },*/
             {
               name: 'createDate',
               type: 'integer',
@@ -43,8 +42,8 @@ export class AccessPoint1617061961770 implements MigrationInterface {
               isNullable: false,
             },
             {
-              name: 'wallet',
-              type: 'varchar',
+              name: 'exchange',
+              type: 'int',
               isNullable: false,
             },
           ],

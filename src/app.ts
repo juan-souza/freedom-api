@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import AuthRouter from './router/authRouter';
 import UserRouter from './router/userRouter';
+import AccessPointRouter from './router/accessPointRouter';
 import dotenv from 'dotenv';
 import {connect} from './database/connection';
 import {checkJwt} from './middleware/checkJwt';
@@ -39,6 +40,7 @@ class App {
      * API endpoints */
     this.express.use('/api/v1/auth', AuthRouter);
     this.express.use('/api/v1/users', [checkJwt], UserRouter);
+    this.express.use('/api/v1/access-point', [checkJwt], AccessPointRouter);
     this.express.use('/api/v1/users2', [checkJwt, checkRole([Roles.GUEST])], UserRouter);
   }
 }

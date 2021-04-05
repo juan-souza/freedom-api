@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import AccessPointType from "./enum/AccessPointType";
+import Exchange from "./enum/Exchange";
 
 @Entity('AccessPoint')
 export class AccessPoint extends BaseEntity {
@@ -14,9 +14,6 @@ export class AccessPoint extends BaseEntity {
 
   @Column()
   name: string;
-
-  @Column('int')
-  type: AccessPointType;
 
   @Column()
   createDate: number;
@@ -27,8 +24,8 @@ export class AccessPoint extends BaseEntity {
   @Column()
   secretKey: string;
 
-  @Column()
-  wallet: string;
+  @Column('int')
+  exchange: Exchange;
 
 }
 

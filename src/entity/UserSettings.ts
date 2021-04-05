@@ -15,13 +15,3 @@ export class UserSettings extends BaseEntity {
   accessPoints: AccessPoint[];
 
 }
-
-
-//list Exchanges
-
-
-//--notificacao
-//enable telegram
-//enable gmail
-//telegram api
-//telegram key
