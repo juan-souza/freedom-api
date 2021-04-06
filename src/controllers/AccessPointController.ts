@@ -1,16 +1,17 @@
 import {Request, Response} from 'express';
 import {AccessPoint} from '../entity/AccessPoint';
 import {StatusCodes} from "http-status-codes";
+import Exchange from "../entity/enum/Exchange";
 
 //FIXME: criar seguranca apiKey/secretKey
 class AccessPointController {
   async insert(req: Request, res: Response) {
     const accessPoint = new AccessPoint();
-    accessPoint.name = req.body.name;
+    accessPoint.name = req.body.accessPoint.name;
     accessPoint.createDate = Date.now();
-    accessPoint.apiKey = req.body.apiKey;
-    accessPoint.secretKey = req.body.secretKey;
-    accessPoint.exchange = req.body.exchange;
+    accessPoint.apiKey = req.body.accessPoint.apiKey;
+    accessPoint.secretKey = req.body.accessPoint.secretKey;
+    accessPoint.exchange = req.body.accessPoint.exchange;
     await accessPoint.save();
     res.send(accessPoint);
   }
@@ -31,6 +32,10 @@ class AccessPointController {
     } else {
       res.status(StatusCodes.NOT_FOUND).send({message: ''});
     }
+  }
+
+  async getExchanges(req: Request, res: Response) {
+    res.send(Object.keys(Exchange).filter(key => isNaN(Number(key))));
   }
 
   async update(req: Request, res: Response) {
@@ -73,6 +78,7 @@ class AccessPointController {
       res.status(StatusCodes.NOT_FOUND).send({message: ''});
     }
   }
+
 }
 
 export default new AccessPointController();
