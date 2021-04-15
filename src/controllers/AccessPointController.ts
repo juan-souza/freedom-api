@@ -3,7 +3,7 @@ import {AccessPoint} from '../entity/AccessPoint';
 import {StatusCodes} from "http-status-codes";
 import Exchange from "../entity/enum/Exchange";
 
-//FIXME: criar seguranca apiKey/secretKey
+// FIXME: criar seguranca apiKey/secretKey
 class AccessPointController {
   async insert(req: Request, res: Response) {
     const accessPoint = new AccessPoint();

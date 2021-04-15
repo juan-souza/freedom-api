@@ -3,7 +3,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   Column,
-  Entity, JoinColumn, JoinTable, OneToOne,
+  Entity, JoinColumn, JoinTable, ManyToMany, OneToOne,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -11,6 +11,8 @@ import bcrypt from 'bcryptjs';
 import Roles from './enum/Roles';
 import UserStatusInfo from './enum/UserStatusInfo';
 import {UserSettings} from "./UserSettings";
+import {AccessPoint} from "./AccessPoint";
+import {PortfolioTracker} from "./PortfolioTracker";
 
 @Entity('User')
 @Unique(['email'])
@@ -27,10 +29,10 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column('int')
+  @Column('integer')
   role: Roles;
 
-  @Column('int')
+  @Column('integer')
   statusInfo: UserStatusInfo;
 
   @Column()
@@ -46,13 +48,21 @@ export class User extends BaseEntity {
   @JoinColumn()
   settings: UserSettings;
 
+  @ManyToMany(() => AccessPoint)
+  @JoinTable()
+  accessPoints: AccessPoint[];
+
+  @ManyToMany(() => PortfolioTracker)
+  @JoinTable()
+  portfolios: PortfolioTracker[];
+
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
   }
 
-  isValidPassword(unencryptedPassword: string):boolean {
+  isValidPassword(unencryptedPassword: string): boolean {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 }

@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import {User} from '../entity/User';
 import {StatusCodes} from "http-status-codes";
+import {UserSettings} from "../entity/UserSettings";
 
 class UserController {
   async insert(req: Request, res: Response) {
@@ -8,6 +9,7 @@ class UserController {
     user.name = req.body.name;
     user.password = req.body.password;
     user.email = req.body.email;
+    user.settings = new UserSettings();
     await user.save();
     res.send(user);
   }

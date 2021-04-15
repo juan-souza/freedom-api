@@ -29,16 +29,17 @@ export class User1615822718500 implements MigrationInterface {
             name: 'email',
             type: 'varchar',
             isNullable: false,
+            isUnique: true
           },
           {
             name: 'role',
-            type: 'int',
+            type: 'integer',
             isNullable: false,
             default: Roles.GUEST,
           },
           {
             name: 'statusInfo',
-            type: 'int',
+            type: 'integer',
             isNullable: false,
             default: UserStatusInfo.PENDING_CONFIRM_EMAIL,
           },
@@ -55,6 +56,11 @@ export class User1615822718500 implements MigrationInterface {
           },
           {
             name: 'updateDate',
+            type: 'integer',
+            isNullable: true,
+          },
+          {
+            name: 'settingsId',
             type: 'integer',
             isNullable: true,
           },

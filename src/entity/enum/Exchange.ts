@@ -1,4 +1,5 @@
 enum Exchange {
+  GLOBAL,
   AAX,
   BINANCE,
   BITTREX,

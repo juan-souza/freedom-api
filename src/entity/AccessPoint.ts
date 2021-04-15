@@ -24,7 +24,7 @@ export class AccessPoint extends BaseEntity {
   @Column()
   secretKey: string;
 
-  @Column('int')
+  @Column("integer")
   exchange: Exchange;
 
 }

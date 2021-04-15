@@ -3,6 +3,7 @@ import {User} from '../entity/User';
 import jwt from 'jsonwebtoken';
 import Roles from '../entity/enum/Roles';
 import {StatusCodes} from 'http-status-codes';
+import {UserSettings} from "../entity/UserSettings";
 
 class AuthController {
   async authentication(req: Request, res: Response) {
@@ -67,6 +68,7 @@ class AuthController {
       userNew.email = email;
       userNew.createDate = Date.now();
       userNew.role = Roles.GUEST;
+      userNew.settings = new UserSettings();
 
       try {
         await userNew.save();

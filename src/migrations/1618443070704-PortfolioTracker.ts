@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class AccessPoint1617061961770 implements MigrationInterface {
+export class PortfolioTracker1618443070704 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     return await queryRunner.createTable(
       new Table({
-        name: 'AccessPoint',
+        name: 'PortfolioTracker',
         columns: [
           {
             name: 'id',
@@ -19,24 +19,30 @@ export class AccessPoint1617061961770 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'createDate',
-            type: 'integer',
-            isNullable: true,
-          },
-          {
-            name: 'apiKey',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'secretKey',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
             name: 'exchange',
             type: 'integer',
+            isNullable: false
+          },
+          {
+            name: 'totalFee',
+            type: 'integer',
             isNullable: false,
+          },
+          {
+            name: 'totalProfit',
+            type: 'integer',
+            isNullable: false,
+            isUnique: true
+          },
+          {
+            name: 'totalProfitPercent',
+            type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'totalSpent',
+            type: 'integer',
+            isNullable: false
           },
         ],
       }),
@@ -44,8 +50,7 @@ export class AccessPoint1617061961770 implements MigrationInterface {
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
-    return await queryRunner.dropTable('AccessPoint');
+  public async down(queryRunner: QueryRunner): Promise<any> {
+    return await queryRunner.dropTable('PortfolioTracker');
   }
-
 }

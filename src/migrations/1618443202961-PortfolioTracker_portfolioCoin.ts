@@ -1,22 +1,23 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class UserSettingsAccessPoints1617064564005 implements MigrationInterface {
+export class PortfolioTrackerPortfolioCoin1618443202961 implements MigrationInterface {
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     return await queryRunner.createTable(
       new Table({
-        name: 'UserSettings_accessPoints',
+        name: 'PortfolioTracker_portfolioCoin',
         columns: [
           {
-            name: 'userSettingsId',
-            type: 'integer',
-            isPrimary: true,
-            isUnique: false,
-          },
-          {
-            name: 'accessPointId',
+            name: 'portfolioTrackerId',
             type: 'integer',
             isPrimary: true,
             isUnique: true,
+          },
+          {
+            name: 'portfolioCoinId',
+            type: 'integer',
+            isPrimary: true,
+            isUnique: false,
           },
         ],
       }),
@@ -25,7 +26,7 @@ export class UserSettingsAccessPoints1617064564005 implements MigrationInterface
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    return await queryRunner.dropTable('UserSettings_accessPoints');
+    return await queryRunner.dropTable('PortfolioTracker_portfolioCoin');
   }
 
 }

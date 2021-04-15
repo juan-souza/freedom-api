@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class AccessPoint1617061961770 implements MigrationInterface {
+export class PortfolioTransaction1618443114092 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     return await queryRunner.createTable(
       new Table({
-        name: 'AccessPoint',
+        name: 'PortfolioTransaction',
         columns: [
           {
             name: 'id',
@@ -14,28 +14,38 @@ export class AccessPoint1617061961770 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'name',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'createDate',
+            name: 'type',
             type: 'integer',
-            isNullable: true,
+            isNullable: false
           },
           {
-            name: 'apiKey',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'secretKey',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'exchange',
+            name: 'date',
             type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'quantity',
+            type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'price',
+            type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'fee',
+            type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'amount',
+            type: 'integer',
+            isNullable: false,
+          },
+          {
+            name: 'notes',
+            type: 'varchar',
             isNullable: false,
           },
         ],
@@ -45,7 +55,7 @@ export class AccessPoint1617061961770 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    return await queryRunner.dropTable('AccessPoint');
+    return await queryRunner.dropTable('PortfolioTransaction');
   }
 
 }

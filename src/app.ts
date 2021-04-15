@@ -10,6 +10,7 @@ import {connect} from './database/connection';
 import {checkJwt} from './middleware/checkJwt';
 import {checkRole} from './middleware/checkRole';
 import Roles from './entity/enum/Roles';
+import PortfolioTrackerRouter from "./router/PortfolioTrackerRouter";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -41,6 +42,7 @@ class App {
     this.express.use('/api/v1/auth', AuthRouter);
     this.express.use('/api/v1/users', [checkJwt], UserRouter);
     this.express.use('/api/v1/access-point', [checkJwt], AccessPointRouter);
+    this.express.use('/api/v1/portfolio-tracker', [checkJwt], PortfolioTrackerRouter);
     this.express.use('/api/v1/users2', [checkJwt, checkRole([Roles.GUEST])], UserRouter);
   }
 }
