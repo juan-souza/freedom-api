@@ -9,7 +9,12 @@ class UserController {
     user.name = req.body.name;
     user.password = req.body.password;
     user.email = req.body.email;
-    user.settings = new UserSettings();
+
+    //create user settings
+    const userSettings = new UserSettings();
+    user.settings = userSettings;
+
+    await userSettings.save();
     await user.save();
     res.send(user);
   }

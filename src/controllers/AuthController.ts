@@ -68,9 +68,13 @@ class AuthController {
       userNew.email = email;
       userNew.createDate = Date.now();
       userNew.role = Roles.GUEST;
-      userNew.settings = new UserSettings();
+
+      //create user settings
+      const userSettings = new UserSettings();
+      userNew.settings = userSettings;
 
       try {
+        await userSettings.save();
         await userNew.save();
       } catch (error) {
         return res.status(StatusCodes.UNAUTHORIZED).send({message: 'Error, Is not possible to save the user, try again!'});
