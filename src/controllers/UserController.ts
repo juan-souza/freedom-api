@@ -5,18 +5,36 @@ import {UserSettings} from "../entity/UserSettings";
 
 class UserController {
   async insert(req: Request, res: Response) {
-    const user = new User();
-    user.name = req.body.name;
-    user.password = req.body.password;
-    user.email = req.body.email;
 
-    //create user settings
+    const {name, email, password, role, statusInfo} = req.body;
+
+    if (!(name || email || password)) {
+      return res.status(StatusCodes.BAD_REQUEST).send({message: 'BAD_REQUEST'});
+    }
+
+    const user = await User.findOne({where: {email}});
+
+    if (user) {
+      return res.status(StatusCodes.BAD_REQUEST).send({message: 'Email address is registered!'});
+    }
+
+    const userNew = new User();
+
+    userNew.name = name;
+    userNew.password = password;
+    userNew.email = email;
+    userNew.role = role;
+    userNew.createDate = Date.now();
+    userNew.statusInfo = statusInfo;
+
+    // create user settings
     const userSettings = new UserSettings();
-    user.settings = userSettings;
+    userNew.settings = userSettings;
 
     await userSettings.save();
-    await user.save();
-    res.send(user);
+    await userNew.save();
+    res.status(StatusCodes.OK).send({message: 'OK'});
+
   }
 
   async findAll(req: Request, res: Response) {

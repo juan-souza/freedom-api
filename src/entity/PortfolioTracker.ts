@@ -13,13 +13,13 @@ export class PortfolioTracker extends BaseEntity {
   id: number;
 
   @Column()
-  name: string;//nome do portifolio
+  name: string;// nome do portifolio
 
   @Column()
-  exchange: Exchange;//corretora do portifolio
+  exchange: Exchange;// corretora do portifolio
 
   @Column()
-  totalFee: number;//valor total de taxas do portifolio
+  totalFee: number;// valor total de taxas do portifolio
 
   @Column()
   totalProfit: number;// lucro ou perca em dolar do portifolio
@@ -28,10 +28,10 @@ export class PortfolioTracker extends BaseEntity {
   totalProfitPercent: number;// lucro ou perca em porcentagem  do portifolio
 
   @Column()
-  totalSpent: number;//valor total em dolar do portifolio
+  totalSpent: number;// valor total em dolar do portifolio
 
   @ManyToMany(() => PortfolioCoin)
   @JoinTable()
-  coins: PortfolioCoin[]; //moedas do  portifolio
+  coins: PortfolioCoin[]; // moedas do  portifolio
 
 }

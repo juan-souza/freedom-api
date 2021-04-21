@@ -18,13 +18,13 @@ export class PortfolioCoin extends BaseEntity {
   coinId: string; // id da moeda
 
   @Column()
-  symbol: string; //moeda
+  symbol: string; // moeda
 
   @Column()
   pair: string; // par da moeda
 
   @Column()
-  totalQuantity: number; //quantidade total da moeda
+  totalQuantity: number; // quantidade total da moeda
 
   @Column()
   totalFee: number;// total de taxas da moeda
@@ -36,10 +36,10 @@ export class PortfolioCoin extends BaseEntity {
   totalProfitPercent: number;// lucro ou perca em porcentagem da moeda
 
   @Column()
-  totalSpent: number;//valor total em dolar da moeda
+  totalSpent: number;// valor total em dolar da moeda
 
   @Column()
-  avgPrice: number; //preco medio da moeda
+  avgPrice: number; // preco medio da moeda
 
   @ManyToMany(() => PortfolioTransaction)
   @JoinTable()

@@ -69,7 +69,7 @@ class AuthController {
       userNew.createDate = Date.now();
       userNew.role = Roles.GUEST;
 
-      //create user settings
+      // create user settings
       const userSettings = new UserSettings();
       userNew.settings = userSettings;
 
