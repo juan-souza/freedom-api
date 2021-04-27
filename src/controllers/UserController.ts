@@ -39,6 +39,10 @@ class UserController {
 
   async findAll(req: Request, res: Response) {
     const users = await User.find();
+    users.map( user =>
+    {
+      delete user.password
+    })
     res.json(users);
   }
 
@@ -49,6 +53,7 @@ class UserController {
       },
     });
     if (user) {
+      delete user.password;
       res.send(user);
     } else {
       res.status(StatusCodes.NOT_FOUND).send({message: ''});
@@ -61,16 +66,40 @@ class UserController {
         id: req.params.id,
       },
     });
+
+    const {name, email, password, role, statusInfo} = req.body;
+
+    const userEmail = await User.findOne({where: {email}});
+
+    if(userEmail.id !== user.id)
+    {
+      return  res.status(StatusCodes.NOT_FOUND).send({message: 'Email address is registered!'});
+    }
+
     if (user) {
-      if (req.body.name) {
-        user.name = req.body.name;
+
+      if (name) {
+        user.name = name;
       }
-      if (req.body.password) {
-        user.password = req.body.password;
+
+      if (password) {
+        user.password = password;
       }
-      if (req.body.email) {
-        user.email = req.body.email;
+
+      if (email) {
+        user.email = email;
       }
+
+      if(role)
+      {
+        user.role = role
+      }
+
+      if(statusInfo)
+      {
+        user.statusInfo = statusInfo;
+      }
+
       await user.save();
       res.send(user);
     } else {
