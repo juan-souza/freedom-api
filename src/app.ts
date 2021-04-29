@@ -41,7 +41,7 @@ class App {
      * API endpoints */
     this.express.use('/api/v1/auth', AuthRouter);
     this.express.use('/api/v1/users', UserRouter);
-    this.express.use('/api/v1/access-point', [checkJwt], AccessPointRouter);
+    this.express.use('/api/v1/access-point', AccessPointRouter);
     this.express.use('/api/v1/portfolio-tracker', [checkJwt], PortfolioTrackerRouter);
     this.express.use('/api/v1/users2', [checkJwt, checkRole([Roles.GUEST])], UserRouter);
   }

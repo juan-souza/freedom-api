@@ -7,11 +7,15 @@ import Exchange from "../entity/enum/Exchange";
 class AccessPointController {
   async insert(req: Request, res: Response) {
     const accessPoint = new AccessPoint();
-    accessPoint.name = req.body.accessPoint.name;
+
+    const { name, apiKey, secretKey, exchange } = req.body;
+
+    accessPoint.name = name;
     accessPoint.createDate = Date.now();
-    accessPoint.apiKey = req.body.accessPoint.apiKey;
-    accessPoint.secretKey = req.body.accessPoint.secretKey;
-    accessPoint.exchange = req.body.accessPoint.exchange;
+    accessPoint.apiKey = apiKey;
+    accessPoint.secretKey = secretKey;
+    accessPoint.exchange = exchange;
+
     await accessPoint.save();
     res.send(accessPoint);
   }
