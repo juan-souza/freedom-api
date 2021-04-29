@@ -39,8 +39,7 @@ class UserController {
 
   async findAll(req: Request, res: Response) {
     const users = await User.find();
-    users.map( user =>
-    {
+    users.map(user => {
       delete user.password
     })
     res.json(users);
@@ -71,9 +70,8 @@ class UserController {
 
     const userEmail = await User.findOne({where: {email}});
 
-    if(userEmail.id !== user.id)
-    {
-      return  res.status(StatusCodes.NOT_FOUND).send({message: 'Email address is registered!'});
+    if (userEmail.id !== user.id) {
+      return res.status(StatusCodes.NOT_FOUND).send({message: 'Email address is registered!'});
     }
 
     if (user) {
@@ -90,13 +88,11 @@ class UserController {
         user.email = email;
       }
 
-      if(role)
-      {
+      if (role) {
         user.role = role
       }
 
-      if(statusInfo)
-      {
+      if (statusInfo) {
         user.statusInfo = statusInfo;
       }
 
@@ -119,6 +115,15 @@ class UserController {
     } else {
       res.status(StatusCodes.NOT_FOUND).send({message: ''});
     }
+  }
+
+  async getCurrentUser(res: Response) {
+    const {email} = res.locals.jwtPayload;
+    return await User.findOne({
+      where: {
+        email: email,
+      },
+    });
   }
 }
 

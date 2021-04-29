@@ -1,11 +1,14 @@
 import {Request, Response} from 'express';
 import {AccessPoint} from '../entity/AccessPoint';
 import {StatusCodes} from "http-status-codes";
-import Exchange from "../entity/enum/Exchange";
+import {User} from "../entity/User";
+import UserController from "./UserController";
 
 // FIXME: criar seguranca apiKey/secretKey
 class AccessPointController {
   async insert(req: Request, res: Response) {
+    const user = await UserController.getCurrentUser(res);
+
     const accessPoint = new AccessPoint();
 
     const { name, apiKey, secretKey, exchange } = req.body;
@@ -17,14 +20,25 @@ class AccessPointController {
     accessPoint.exchange = exchange;
 
     await accessPoint.save();
+
+    user.accessPoints = [accessPoint];
+    await User.save(user);
+
     res.send(accessPoint);
   }
 
   async findAll(req: Request, res: Response) {
-    const accessPoints = await AccessPoint.find();
+    const user = await UserController.getCurrentUser(res);
+
+    const accessPoints = await User.find({
+      //where: {id: user.id},
+      relations: ['accessPoints'],
+    });
+
     res.json(accessPoints);
   }
 
+  //FIXME: aplicar somente user
   async findById(req: Request, res: Response) {
     const accessPoint = await AccessPoint.findOne({
       where: {
@@ -38,10 +52,7 @@ class AccessPointController {
     }
   }
 
-  async getExchanges(req: Request, res: Response) {
-    res.send(Object.keys(Exchange).filter(key => isNaN(Number(key))));
-  }
-
+  //FIXME: aplicar somente user
   async update(req: Request, res: Response) {
     const accessPoint = await AccessPoint.findOne({
       where: {
@@ -69,6 +80,7 @@ class AccessPointController {
     }
   }
 
+  //FIXME: aplicar somente user
   async delete(req: Request, res: Response) {
     const accessPoint = await AccessPoint.findOne({
       where: {

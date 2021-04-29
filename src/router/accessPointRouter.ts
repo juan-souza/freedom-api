@@ -13,7 +13,6 @@ class AccessPointRouter {
     this.router.post('/', AccessPointController.insert);
     this.router.get('/', AccessPointController.findAll);
     this.router.get('/:id', AccessPointController.findById);
-    this.router.get('/exchange/all', AccessPointController.getExchanges);
     this.router.put('/:id', AccessPointController.update);
     this.router.delete('/:id', AccessPointController.delete);
   }

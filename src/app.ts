@@ -5,12 +5,13 @@ import bodyParser from 'body-parser';
 import AuthRouter from './router/authRouter';
 import UserRouter from './router/userRouter';
 import AccessPointRouter from './router/accessPointRouter';
+import PortfolioTrackerRouter from "./router/PortfolioTrackerRouter";
+import ExchangeRouter from "./router/ExchangeRouter";
 import dotenv from 'dotenv';
 import {connect} from './database/connection';
 import {checkJwt} from './middleware/checkJwt';
 import {checkRole} from './middleware/checkRole';
 import Roles from './entity/enum/Roles';
-import PortfolioTrackerRouter from "./router/PortfolioTrackerRouter";
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -40,10 +41,11 @@ class App {
      * working so far. This function will change when we start to add more
      * API endpoints */
     this.express.use('/api/v1/auth', AuthRouter);
-    this.express.use('/api/v1/users', UserRouter);
-    this.express.use('/api/v1/access-point', AccessPointRouter);
+    this.express.use('/api/v1/users', [checkJwt], UserRouter);
+    this.express.use('/api/v1/access-point', [checkJwt], AccessPointRouter);
     this.express.use('/api/v1/portfolio-tracker', [checkJwt], PortfolioTrackerRouter);
-    this.express.use('/api/v1/users2', [checkJwt, checkRole([Roles.GUEST])], UserRouter);
+    //this.express.use('/api/v1/users2', [checkJwt, checkRole([Roles.GUEST])], UserRouter);
+    this.express.use('/api/v1/exchange', [checkJwt], ExchangeRouter);
   }
 }
 
